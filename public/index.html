@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stock Broker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Background -->
+  <div class="gradient-bg"></div>
+
+  <!-- 1️⃣ CENTERED LOGIN SCREEN -->
+  <section id="login-wrapper" class="login-wrapper">
+    <div class="card login-card" id="login-section">
+      <h2 class="login-title">Sign in</h2>
+      
+
+      <form id="login-form" class="login-form">
+        <label class="field-label" for="email-input">Email</label>
+        <input
+          id="email-input"
+          type="email"
+          placeholder="you@example.com"
+          required
+        />
+
+        <label class="field-label" for="password-input">Password</label>
+        <input
+          id="password-input"
+          type="password"
+          placeholder="Enter your password"
+          required
+        />
+
+        <button type="submit" class="btn primary login-btn">
+          Login
+        </button>
+      </form>
+
+      
+    </div>
+  </section>
+
+  <!-- 2️⃣ MAIN APP (hidden until login) -->
+  <main class="app-shell hidden" id="app-shell">
+    <!-- LEFT: Sidebar -->
+    <section class="sidebar" id="sidebar-dashboard">
+      <div class="brand">
+        <div class="brand-logo">S</div>
+        <div class="brand-text">
+          <h1>Stock Broker</h1>
+        </div>
+      </div>
+
+      <div class="user-block">
+        <div class="avatar" id="user-avatar">SA</div>
+        <div class="user-meta">
+          <p class="label">Signed in as</p>
+          <p id="user-email" class="value">demo@example.com</p>
+        </div>
+      </div>
+
+      <div class="sidebar-actions">
+        <button id="logout-btn" class="btn ghost small">Logout</button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-header">
+          <h3>Portfolio Snapshot</h3>
+        </div>
+        <div class="portfolio-metrics">
+          <div class="metric">
+            <p class="metric-label">Equity</p>
+            <p class="metric-value" id="equity-value">₹0</p>
+            <p class="metric-sub" id="equity-change">0.00% Today</p>
+          </div>
+          <div class="metric">
+            <p class="metric-label">Cash</p>
+            <p class="metric-value" id="cash-value">₹0</p>
+            <p class="metric-sub muted">Virtual balance</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-header">
+          <h3>Theme</h3>
+        </div>
+        <button id="theme-toggle" class="btn ghost small">
+          Toggle Dark / Light
+        </button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-header">
+          <h3>Live Activity</h3>
+        </div>
+        <ul id="activity-log" class="activity-log"></ul>
+      </div>
+    </section>
+
+    <!-- RIGHT: Dashboard -->
+    <section class="main-panel hidden" id="dashboard">
+      <!-- Top bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h2>Live Market Desk</h2>
+          <p class="muted">
+            Streaming prices for selected tech stocks.
+          </p>
+        </div>
+        <div class="topbar-right">
+          <div class="chip live">
+            <span class="dot"></span>
+            Live 
+          </div>
+        </div>
+      </header>
+
+      <!-- Ticker subscription and order panel -->
+      <section class="panel-grid">
+        <div class="card">
+          <div class="section-header">
+            <h3>Watchlist</h3>
+            <p class="muted small">
+              Select which tickers you want to stream.
+            </p>
+          </div>
+          <div id="ticker-filters" class="ticker-filters"></div>
+        </div>
+
+        <div class="card">
+          <div class="section-header">
+            <h3>Place Virtual Order</h3>
+            
+          </div>
+          <form id="order-form" class="order-form">
+            <div class="field-group">
+              <label class="field-label" for="order-ticker">Ticker</label>
+              <select id="order-ticker"></select>
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="order-qty">Quantity</label>
+              <input
+                id="order-qty"
+                type="number"
+                min="1"
+                step="1"
+                value="10"
+                required
+              />
+            </div>
+            <div class="order-actions">
+              <button type="button" id="buy-btn" class="btn primary">
+                Buy
+              </button>
+              <button type="button" id="sell-btn" class="btn danger ghost">
+                Sell
+              </button>
+            </div>
+            
+          </form>
+        </div>
+      </section>
+
+      <!-- Live cards -->
+      <section class="panel">
+        <div class="section-header">
+          <h3>Real-time Price Cards</h3>
+          <p class="muted small">
+            Each card shows live price, trend of the tickers.
+          </p>
+        </div>
+        <div id="ticker-cards" class="ticker-cards"></div>
+      </section>
+
+      <!-- Holdings + table -->
+      <section class="panel two-column">
+        <div class="card">
+          <div class="section-header">
+            <h3>Holdings</h3>
+            <p class="muted small">
+              Unrealised P/L updates the moment prices move.
+            </p>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th>Qty</th>
+                  <th>Avg Price</th>
+                  <th>LTP</th>
+                  <th>P/L</th>
+                </tr>
+              </thead>
+              <tbody id="holdings-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-header">
+            <h3>Trade Tips</h3>
+          </div>
+          <ul class="notes-list">
+            <li>Diversify your portfolio to reduce risk exposure.</li>
+            <li>Avoid investing heavily during uncertain global events.</li>
+            <li>Long-term investing often beats short-term speculation.</li>
+            <li>Always check volume before entering a trade.</li>
+          </ul>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
