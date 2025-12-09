@@ -1,3 +1,18 @@
+```text
+📂 Project Folder Structure
+
+
+StockBroker/
+│
+├── public/
+│   ├── index.html      # Login + Dashboard UI
+│   ├── styles.css      # UI design (Glassmorphism)
+│   ├── app.js          # Frontend Socket.IO + Trading logic
+│
+├── server.js           # Backend + WebSocket engine
+├── package.json
+├── package-lock.json
+└── README.md
 📈 StockBroker — Real-Time Market Simulation Dashboard
 
 
